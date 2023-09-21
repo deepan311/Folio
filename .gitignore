@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 /node_modules
+.env
 =======
 # Logs
 logs
@@ -131,6 +132,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+.env
 >>>>>>> 84508731f7a1671a460cad29d9a751126a5dbb4c
 <<<<<<< HEAD
 ... (your local changes)
