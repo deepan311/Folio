@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@emotion/react";
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
-
+import {ImSpinner3} from "react-icons/im"
 import obj from "./theme";
 
 
@@ -62,7 +62,9 @@ export const AuthProvider = ({ children }) => {
     <ThemeProvider theme={mode ? dark : theme}>
 
 
-      {loading ? "loading" : children}
+      {loading ?  <div className=" flex justify-center h-[80vh] items-center">
+             <ImSpinner3  className="text-2xl mx-3 animate-spin" />Loding...
+            </div> : children}
     </ThemeProvider>
 
     </AuthContext.Provider>

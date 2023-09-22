@@ -114,8 +114,7 @@ function EditPage({ open, close }) {
   };
 
   const submit = async (e) => {
-    console.log(e);
-
+   
     const data = {
       name: e.name,
       about: e.about,
@@ -192,7 +191,20 @@ function EditPage({ open, close }) {
         </DialogActions>
       </Dialog>
 
-      <AppBar sx={{ position: "relative" }}>
+      
+      <div className="w-full montserrat-font p-3 ">
+        <Formik initialValues={init} validate={valid} onSubmit={submit}>
+          {({
+            values,
+            handleSubmit,
+            handleChange,
+            setFieldValue,
+            handleBlur,
+          }) => (
+
+<>
+  
+<AppBar sx={{ position: "relative" }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -211,23 +223,13 @@ function EditPage({ open, close }) {
             disabled={load}
             autoFocus
             color="inherit"
-            onClick={() => {
-              console.log("save");
-            }}
+            onClick={handleSubmit}
           > {load && <AiOutlineLoading3Quarters className="animate-spin mx-2"/>}
             save
           </Button>
         </Toolbar>
       </AppBar>
-      <div className="w-full montserrat-font p-3 ">
-        <Formik initialValues={init} validate={valid} onSubmit={submit}>
-          {({
-            values,
-            handleSubmit,
-            handleChange,
-            setFieldValue,
-            handleBlur,
-          }) => (
+
             <form
               onSubmit={handleSubmit}
               style={{
@@ -746,6 +748,7 @@ function EditPage({ open, close }) {
                {load && <AiOutlineLoading3Quarters className="animate-spin mx-2"/>} Save and change{" "}
               </button>
             </form>
+</>
           )}
         </Formik>
       </div>

@@ -7,6 +7,7 @@ import Project from "../Main/Project";
 import { useAuthContext } from "../Auth";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { ImSpinner2 } from "react-icons/im";
 
 function Home() {
   const { username } = useParams();
@@ -61,7 +62,7 @@ function Home() {
       );
       if (result.status == 200) {
         setauth({status:true,data:result.data})
-        console.log(result)
+        
       }
       setloading(false)
     } catch (error) {
@@ -82,7 +83,9 @@ function Home() {
 
 
   if (load) {
-    return <>Loading.........</>;
+    return <div className=" flex justify-center h-[80vh] items-center">
+    <ImSpinner2  className="text-2xl mx-3 animate-spin" />Loding...
+   </div>;
   }
 
   if (error.status) {

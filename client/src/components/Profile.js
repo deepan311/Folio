@@ -81,7 +81,7 @@ function Profile() {
     });
   };
 
-  console.log(userData);
+ 
 
   const proImgChange = async (event) => {
     const file = event.target.files[0];
