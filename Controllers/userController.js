@@ -60,17 +60,16 @@ exports.register = async (req, res) => {
     });
 
     let mailsend = "No SEND";
-    // html: `<div><h3>Welcome to Folio </h3> <br /> <h3>Create your  portfolio as simple </h3> <br /><a href="http://localhost:3000/deepan/verify?token=${verifyToken}"> Click here to veridy your account</a></div>`,
-
-    // await sendMail(email, "Verify Account", {
-    //   html: `<div><h3>Welcome to Folio </h3> <br /> <h3> Your User Name ${username} </h3> <br /><a href="http://localhost:3000/deepan/verify?token=${verifyToken}"> Click here to verify your account</a></div>`,
-    // })
-    //   .then((res) => {
-    //     mailsend = res;
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    html: `<div><h3>Welcome to Folio </h3> <br /> <h3>Create your  portfolio as simple </h3> <br /><a href="http://localhost:3000/deepan/verify?token=${verifyToken}"> Click here to veridy your account</a></div>`,
+      await sendMail(email, "Verify Account", {
+        html: `<div><h3>Welcome to Folio </h3> <br /> <h3> Your User Name ${username} </h3> <br /><a href="http://localhost:3000/deepan/verify?token=${verifyToken}"> Click here to verify your account</a></div>`,
+      })
+        .then((res) => {
+          mailsend = res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
     res.status(200).send({ msg: "created success", mailsend });
   } catch (error) {
@@ -272,11 +271,30 @@ exports.UpdateUserProfile = async (req, res) => {
     return sendError(res, "DB Update Faild");
   }
 
-  const userData = await UserData.findOne({username})
+  const userData = await UserData.findOne({ username });
 
   if (!userData) {
     return sendError(res, "No Fetch data");
   }
 
   sendSuccess(res, userData);
+};
+
+exports.contactUpdate = async (req, res) => {
+  const { username } = req.data;
+  try {
+    const data = req.body; //{linkedIn,email,phone,github}
+
+    const update = await UserData.findOneAndUpdate(
+      { username },
+      { $set: { contact: data } }
+    );
+
+    if (!update) {
+      return sendError(res, "No update");
+    }
+    sendSuccess(res, "Updated successfully");
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };

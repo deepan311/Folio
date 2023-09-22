@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import React, { lazy, useRef, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import Banner from "../asset/banner.jpeg";
+import ProjectDummyImg from "../asset/project.jpg";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { ImSpinner3, ImFilesEmpty } from "react-icons/im";
 import { FaGithub } from "react-icons/fa";
@@ -35,7 +35,7 @@ function Project() {
   const [load, setload] = useState(false);
   const [miniload, setminiload] = useState(false);
   const profRef = useRef(null);
-  const [projectImg, setprojectImg] = useState(Banner);
+  const [projectImg, setprojectImg] = useState(ProjectDummyImg);
 
   const secondary = alltheme.palette.secondary.main;
   const primary = alltheme.palette.primary.main;
@@ -85,7 +85,7 @@ function Project() {
       error.description = "Required description";
     }
 
-    if (projectImg === Banner) {
+    if (projectImg === ProjectDummyImg) {
       error.img = "Image Required";
     }
 
@@ -97,7 +97,7 @@ function Project() {
       setload(true);
       await axios
         .post(
-          `http://localhost:8000/api/project/addproject`,
+          `${process.env.REACT_APP_API_URL}/api/project/addproject`,
           {
             imageBase64: projectImg,
             title: e.title,

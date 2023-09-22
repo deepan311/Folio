@@ -65,7 +65,7 @@ function Register() {
 
     try {
       const userNameResult = await axios.post(
-        `http://localhost:8000/api/user/userexist`,
+        `${process.env.REACT_APP_API_URL}/api/user/userexist`,
         { username: value }
       );
       console.log(userNameResult);
@@ -90,15 +90,15 @@ function Register() {
 
   const initvalue = {
     name: "",
-    email: "deepanraj3112002@gmail.com",
+    email: "",
     username: "",
-    password: "Deepan3@",
-    cPassword: "Deepan3@",
-    about: "hey buddy",
+    password: "",
+    cPassword: "",
+    about: "",
     skill: [],
     education: [],
-    state: "Tamil Nadu",
-    city: "Thanjavur",
+    state: "",
+    city: "",
     exp: "select experience",
   };
 

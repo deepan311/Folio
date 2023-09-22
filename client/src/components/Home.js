@@ -25,7 +25,7 @@ function Home() {
       setload(true);
 
       const fetch = await axios.get(
-        `http://localhost:8000/api/user/userdata/${username}`
+        `${process.env.REACT_APP_API_URL}/api/user/userdata/${username}`
       );
 
       if (fetch.status == 200) {
@@ -56,7 +56,7 @@ function Home() {
     setloading(true)
     try {
       const result = await axios.get(
-        `http://localhost:8000/api/user/verifytoken`,
+        `${process.env.REACT_APP_API_URL}/api/user/verifytoken`,
         { headers: { token } }
       );
       if (result.status == 200) {

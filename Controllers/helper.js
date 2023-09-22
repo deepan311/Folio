@@ -37,6 +37,7 @@ exports.sendError=(res,msg)=>{
 }
 exports.sendSuccess=(res,data)=>{
 
-    return res.status(200).send(data)
+    return res.status(200)
+    .send(data)
 
 }

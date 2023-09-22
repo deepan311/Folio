@@ -10,7 +10,7 @@ import {
   BsFillBookmarkPlusFill,
 } from "react-icons/bs";
 import { BiBookAdd } from "react-icons/bi";
-import { AiFillFileAdd } from "react-icons/ai";
+import { AiFillFileAdd, AiFillGithub } from "react-icons/ai";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,6 +20,8 @@ import { useAuthContext } from "../Auth";
 
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import ContactEditPage from "./ContactEditPage";
+import Contact from "./Contact";
 
 function Profile() {
   const navigate = useNavigate();
@@ -38,10 +40,11 @@ function Profile() {
   const [bannerPicLoad, setbannerPicLoad] = useState(false);
 
   const [MainEdit, setMainEdit] = useState(false);
+  const [editContact, seteditContact] = useState(false);
 
   var { username } = useParams();
 
-  username = username.toLowerCase()
+  username = username.toLowerCase();
 
   const alltheme = useTheme();
   const secondary = alltheme.palette.secondary.main;
@@ -50,26 +53,8 @@ function Profile() {
   const changeColor = isDarkMode ? "white" : "black";
   const changeBgColor = isDarkMode ? "#2A2A2A" : "rgba(244, 244, 244, 1)";
 
-  const contact = [
-    {
-      icon: <MdEmail />,
-      name: "Email",
-      content: "deep.developer.31@gmail.com",
-      link: "dee",
-    },
-    {
-      icon: <BsTelephoneFill />,
-      name: "Phone",
-      content: "+91 9597439871",
-      link: "",
-    },
-    {
-      icon: <BsLinkedin />,
-      name: "Linked In",
-      content: "Click here",
-      link: "dee",
-    },
-  ];
+
+  
 
   useEffect(() => {
     if (auth.status) {
@@ -96,7 +81,7 @@ function Profile() {
     });
   };
 
-  console.log(userData)
+  console.log(userData);
 
   const proImgChange = async (event) => {
     const file = event.target.files[0];
@@ -105,14 +90,13 @@ function Profile() {
         setprofilePicLoad(true);
         await axios
           .post(
-            `http://localhost:8000/api/user/uploadprofile`,
+            `${process.env.REACT_APP_API_URL}/api/user/uploadprofile`,
             { base64Data: res },
             {
               headers: { token: cookie.token },
             }
           )
           .then((res) => {
-            console.log(res);
             setprofilePicLoad(false);
             setproImg(res.data);
           })
@@ -123,7 +107,7 @@ function Profile() {
       })
       .catch((err) => {
         setprofilePicLoad(false);
-       
+
         console.log(err);
       });
   };
@@ -136,14 +120,13 @@ function Profile() {
         setbannerPicLoad(true);
         await axios
           .post(
-            `http://localhost:8000/api/user/uploadbanner`,
+            `${process.env.REACT_APP_API_URL}/api/user/uploadbanner`,
             { base64Data: res },
             {
               headers: { token: cookie.token },
             }
           )
           .then((res) => {
-            console.log(res);
             setbannerPicLoad(false);
             setBannerImg(res.data);
           })
@@ -236,7 +219,7 @@ function Profile() {
               {userData.name}
             </h3>
             <h3 className="font-bold text-[10px] montserrat-font">
-              Thanjavur , Tamil Nadu
+              {userData.address.city} , {userData.address.state}
             </h3>
           </div>
 
@@ -346,30 +329,21 @@ function Profile() {
             <div className="">
               <h3 className="text-2xl font-bold my-2">contact</h3>
               <Divider sx={{ marginRight: 3 }} />
-              <h4 className="text-xs my-3 tracking-tighter">
-                {contact.map((item, index) => (
-                  <div key={index} className="flex my-4 gap-3 items-center">
-                    {item.icon}
-                    <h4>{item.name}</h4>
-                    <h3>
-                      {" "}
-                      {item.link.length > 0 ? (
-                        <a href="#" className="hover:text-blue-400">
-                          {item.content}
-                        </a>
-                      ) : (
-                        item.content
-                      )}{" "}
-                    </h3>
-                  </div>
-                ))}
+              <div className="text-xs my-3 tracking-tighter">
+              {/* ===========Contact ============== */}
+               <Contact data={userData.contact} email={userData.email} />
                 {!view && (
-                  <button className="w-full bg-gray-400/50 py-2 gap-3 flex items-center justify-center rounded-full">
+                  <button
+                    onClick={() => {
+                      seteditContact(true);
+                    }}
+                    className="w-full bg-gray-400/50 py-2 gap-3 flex items-center justify-center rounded-full"
+                  >
                     {" "}
                     Edit <AiTwotoneEdit />
                   </button>
                 )}
-              </h4>
+              </div>
             </div>
           </div>
         </div>
@@ -396,9 +370,7 @@ function Profile() {
                       {item.expYear} EXP
                     </span>{" "}
                   </h3>
-                  <h4 className="text-xs">
-                    {item.details}
-                  </h4>
+                  <h4 className="text-xs">{item.details}</h4>
 
                   <Divider sx={{ marginTop: 2 }} />
                 </div>
@@ -465,6 +437,15 @@ function Profile() {
       {MainEdit && (
         <div className="fixed top-0 h-screen w-full bg-black/60 left-0 flex justify-center items-center">
           <EditPage open={MainEdit} close={setMainEdit} />
+        </div>
+      )}
+
+      {editContact && (
+        <div className="fixed top-0 z-50 h-screen w-full bg-black/60 left-0 flex justify-center items-center">
+          <ContactEditPage
+            data={auth.status && auth.data}
+            close={seteditContact}
+          />
         </div>
       )}
     </>

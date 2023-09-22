@@ -128,7 +128,7 @@ function EditPage({ open, close }) {
     try {
       setload(true);
       const update = await axios.post(
-        `http://localhost:8000/api/user/updateuser`,
+        `${process.env.REACT_APP_API_URL}/api/user/updateuser`,
         data,
         { headers: { token: cookie.token } }
       );

@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
   const resigter = async (data) => {
     try {
       const reg = await axios.post(
-        "http://localhost:8000/api/user/register",
+        `${process.env.REACT_APP_API_URL}/api/user/register`,
         data
       );
 
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async ({ username, password }) => {
     try {
-      const log = await axios.post("http://localhost:8000/api/user/login", {
+      const log = await axios.post(`${process.env.REACT_APP_API_URL}/api/user/login`, {
         username,
         password,
       });
