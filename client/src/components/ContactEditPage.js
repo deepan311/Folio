@@ -36,7 +36,7 @@ function ContactEditPage({ data, close }) {
     try {
         setload(true)
       const update = await axios.post(
-        `${process.env.REACT_APP_API_UR}/api/user/updateconect`,
+        `${process.env.REACT_APP_API_URL}/api/user/updateconect`,
         data,
         { headers: { token: cookie.token } }
       );
