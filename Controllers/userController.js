@@ -61,8 +61,8 @@ exports.register = async (req, res) => {
 
     let mailsend = "No SEND";
     html: `<div><h3>Welcome to Folio </h3> <br /> <h3>Create your  portfolio as simple </h3> <br /><a href="http://localhost:3000/deepan/verify?token=${verifyToken}"> Click here to veridy your account</a></div>`,
-      await sendMail(email, "Verify Account", {
-        html: `<div><h3>Welcome to Folio </h3> <br /> <h3> Your User Name ${username} </h3> <br /><a href="http://localhost:3000/deepan/verify?token=${verifyToken}"> Click here to verify your account</a></div>`,
+      await sendMail(email, "Thanks for creating your portfolio", {
+        html: `<div><h3>Welcome to Folio </h3> <br /> <h3> Your User Name ${username} </h3> <br />your password is ${password} Make it private Don't share any one</div>`,
       })
         .then((res) => {
           mailsend = res;
