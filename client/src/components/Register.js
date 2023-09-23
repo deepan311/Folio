@@ -61,7 +61,9 @@ function Register() {
 
     setcheckuserexist({ ...checkuserexist, load: true });
 
-    const { name, value } = e.target;
+    // const { name, value } = e.target;
+    const inputValue = e.target.value;
+    const value = inputValue.replace(/\s/g, "");
 
     try {
       const userNameResult = await axios.post(
@@ -175,7 +177,7 @@ function Register() {
       if (e.education.length > 0) {
         data.education = e.education;
       }
-  
+
       const result = await resigter(data);
       if (result.status == 200) {
         const log = await login({ username: e.username, password: e.password });
@@ -273,7 +275,9 @@ function Register() {
                 <div className="w-full relative flexitems-center">
                   <Field
                     onChange={(e) => {
-                      handleChange(e);
+                      const inputValue = e.target.value;
+                      const textWithoutSpaces = inputValue.replace(/\s/g, "");
+                      setFieldValue("username",textWithoutSpaces);
                       usernameValid(e);
                     }}
                     type="text"
