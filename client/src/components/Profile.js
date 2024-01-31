@@ -264,8 +264,8 @@ function Profile() {
                 <div key={index} className=" flex items-center my-4">
                   <VscDebugBreakpointData className="text-2xl flex mx-4" />
                   <div>
-                    <h3 className="text-xl font-semibold">Computer Science</h3>
-                    <h3 className="text-sm"> PRIST UNIVERSITY </h3>
+                    <h3 className="text-xl font-semibold">{item.course}</h3>
+                    <h3 className="text-sm">{item.college}</h3>
                   </div>
                 </div>
               ))}
